@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { headphones, earphones, speakers } from "../../assets";
 
 // import components
-import { Category } from "..";
+import { Category } from "../../components";
 
 function Categories() {
   return (

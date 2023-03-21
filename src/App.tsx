@@ -76,8 +76,6 @@ export const GlobalContainer = styled.div<{ location: Location }>`
   max-width: 1440px;
   width: 100%;
   margin: auto;
-  background-color: ${(props) =>
-    props.location.pathname !== "/" && "var(--primary-black)"};
 `;
 
 // impot layouts
@@ -98,7 +96,7 @@ function App() {
           path="/category/:categoryId"
           element={<UniqueCategory />}
         ></Route>
-        <Route path="/detail/:detailId" element={<Detail />}></Route>
+        <Route path="/productDetail/:detailId" element={<Detail />}></Route>
         <Route path="/checkout" element={<Checkout />}></Route>
       </Routes>
       <Footer />

@@ -11,7 +11,7 @@ interface CategoryProps {
 
 function Category({ image, title }: CategoryProps) {
   return (
-    <Link to={`/category/${title}`}>
+    <CardLink to={`/category/${title}`}>
       <Card>
         <CategoryImage src={image} />
         <Title>{title}</Title>
@@ -20,11 +20,15 @@ function Category({ image, title }: CategoryProps) {
           <ArrowImage src={rightArrow} alt="arrow" />
         </ButtonContainer>
       </Card>
-    </Link>
+    </CardLink>
   );
 }
 
 export default Category;
+
+const CardLink = styled(Link)`
+  width: 100%;
+`;
 
 const Card = styled.div`
   position: relative;

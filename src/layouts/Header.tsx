@@ -18,63 +18,72 @@ function Header() {
   const location = useLocation();
 
   return (
-    <HeaderComponent location={location}>
-      <Content>
-        <LeftSide>
-          {showMenu ? (
-            <CloseMenu
-              src={close}
-              alt="close"
-              onClick={() => setShowMenu(false)}
-            />
-          ) : (
-            <OpenMenu
-              src={Hamburger}
-              alt="burger-menu"
-              onClick={() => setShowMenu(true)}
-            />
-          )}
+    <Container location={location}>
+      <HeaderComponent location={location}>
+        <Content>
+          <LeftSide>
+            {showMenu ? (
+              <CloseMenu
+                src={close}
+                alt="close"
+                onClick={() => setShowMenu(false)}
+              />
+            ) : (
+              <OpenMenu
+                src={Hamburger}
+                alt="burger-menu"
+                onClick={() => setShowMenu(true)}
+              />
+            )}
 
-          <Logo src={logo} alt="logo" />
-          {/* navigation */}
-          <HeaderNav>
-            <NavList>
-              <Link to="/">
-                <NavItem>home</NavItem>
-              </Link>
-              <NavItem>headphones</NavItem>
-              <NavItem>speakers</NavItem>
-              <NavItem>earphones</NavItem>
-            </NavList>
-          </HeaderNav>
-        </LeftSide>
-        <RightSide>
-          <CartIcon src={cart} alt="cart" />
-        </RightSide>
-      </Content>
-      {/*  */}
-      {showMenu && (
-        <Backdrop>
-          <Menu>
-            <MenuContainer>
+            <Logo src={logo} alt="logo" />
+            {/* navigation */}
+            <HeaderNav>
               <NavList>
-                <NavItem>home</NavItem>
+                <Link to="/">
+                  <NavItem>home</NavItem>
+                </Link>
                 <NavItem>headphones</NavItem>
                 <NavItem>speakers</NavItem>
                 <NavItem>earphones</NavItem>
               </NavList>
-            </MenuContainer>
-          </Menu>
-        </Backdrop>
-      )}
-    </HeaderComponent>
+            </HeaderNav>
+          </LeftSide>
+          <RightSide>
+            <CartIcon src={cart} alt="cart" />
+          </RightSide>
+        </Content>
+        {/*  */}
+        {showMenu && (
+          <Backdrop>
+            <Menu>
+              <MenuContainer>
+                <NavList>
+                  <NavItem>home</NavItem>
+                  <NavItem>headphones</NavItem>
+                  <NavItem>speakers</NavItem>
+                  <NavItem>earphones</NavItem>
+                </NavList>
+              </MenuContainer>
+            </Menu>
+          </Backdrop>
+        )}
+      </HeaderComponent>
+    </Container>
   );
 }
 
 export default Header;
 
+const Container = styled.div<{ location: Location }>`
+  background-color: ${(props) =>
+    props.location.pathname !== "/" && "var(--primary-black)"};
+`;
+
 const HeaderComponent = styled.div<{ location: Location }>`
   position: relative;
+  background-color: ${(props) =>
+    props.location.pathname !== "/" && "var(--primary-black)"};
 
   &::after {
     content: "";
@@ -126,6 +135,8 @@ const LeftSide = styled.div`
 `;
 
 const OpenMenu = styled.img`
+  width: 16px;
+  height: 16px;
   cursor: pointer;
   @media screen and (min-width: 1110px) {
     display: none;
@@ -191,10 +202,10 @@ const CartIcon = styled.img`
 
 const Backdrop = styled.div`
   width: 100%;
-  height: calc(100vh - 89px);
+  height: calc(100vh - 90px);
   position: absolute;
   z-index: 9999;
-  top: 89px;
+  top: 90px;
   left: 0px;
   background-color: rgba(0, 0, 0, 0.5);
   transition: height 2s ease-in;

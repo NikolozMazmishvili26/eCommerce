@@ -41,6 +41,7 @@ const Container = styled.div`
   margin: auto;
   width: 100%;
   padding: 0px 24px 120px 24px;
+
   @media screen and (min-width: 768px) {
     padding: 0px 40px 96px 40px;
   }
