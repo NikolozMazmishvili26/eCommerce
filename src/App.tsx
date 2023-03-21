@@ -53,6 +53,12 @@ const GlobalStyles = createGlobalStyle`
     border-collapse: collapse;
     border-spacing: 0;
   }
+
+  a{
+    text-decoration: none;
+  }
+
+
   /* global styles */
   :root{
     --primary-orange : #D87D4A;
@@ -78,7 +84,7 @@ export const GlobalContainer = styled.div<{ location: Location }>`
 import { Header, Footer } from "./layouts";
 
 // import pages
-import { Category, Checkout, Detail, Home } from "./pages";
+import { UniqueCategory, Checkout, Detail, Home } from "./pages";
 
 function App() {
   const location = useLocation();
@@ -88,7 +94,10 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Home />}></Route>
-        <Route path="/category/:categoryId" element={<Category />}></Route>
+        <Route
+          path="/category/:categoryId"
+          element={<UniqueCategory />}
+        ></Route>
         <Route path="/detail/:detailId" element={<Detail />}></Route>
         <Route path="/checkout" element={<Checkout />}></Route>
       </Routes>

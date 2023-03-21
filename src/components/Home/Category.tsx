@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 // import assets
 import { rightArrow } from "../../assets";
@@ -10,14 +11,16 @@ interface CategoryProps {
 
 function Category({ image, title }: CategoryProps) {
   return (
-    <Card>
-      <CategoryImage src={image} />
-      <Title>headphones</Title>
-      <ButtonContainer>
-        <ShopButton>shop</ShopButton>
-        <ArrowImage src={rightArrow} alt="arrow" />
-      </ButtonContainer>
-    </Card>
+    <Link to={`/category/${title}`}>
+      <Card>
+        <CategoryImage src={image} />
+        <Title>{title}</Title>
+        <ButtonContainer>
+          <ShopButton>shop</ShopButton>
+          <ArrowImage src={rightArrow} alt="arrow" />
+        </ButtonContainer>
+      </Card>
+    </Link>
   );
 }
 

@@ -1,11 +1,19 @@
+import { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { Location } from "@remix-run/router";
 
 // import assets
-import { Hamburger, logo, cart } from "../assets";
+import { Hamburger, logo, cart, close } from "../assets";
 
 function Header() {
+  //
+  const [showMenu, setShowMenu] = useState(false);
+
+  useEffect(() => {
+    document.body.style.overflow = showMenu ? "hidden" : "unset";
+  }, [showMenu]);
+
   //
   const location = useLocation();
 
@@ -13,12 +21,27 @@ function Header() {
     <HeaderComponent location={location}>
       <Content>
         <LeftSide>
-          <BurgerIcon src={Hamburger} alt="burger-menu" />
+          {showMenu ? (
+            <CloseMenu
+              src={close}
+              alt="close"
+              onClick={() => setShowMenu(false)}
+            />
+          ) : (
+            <OpenMenu
+              src={Hamburger}
+              alt="burger-menu"
+              onClick={() => setShowMenu(true)}
+            />
+          )}
+
           <Logo src={logo} alt="logo" />
           {/* navigation */}
           <HeaderNav>
             <NavList>
-              <NavItem>home</NavItem>
+              <Link to="/">
+                <NavItem>home</NavItem>
+              </Link>
               <NavItem>headphones</NavItem>
               <NavItem>speakers</NavItem>
               <NavItem>earphones</NavItem>
@@ -29,6 +52,21 @@ function Header() {
           <CartIcon src={cart} alt="cart" />
         </RightSide>
       </Content>
+      {/*  */}
+      {showMenu && (
+        <Backdrop>
+          <Menu>
+            <MenuContainer>
+              <NavList>
+                <NavItem>home</NavItem>
+                <NavItem>headphones</NavItem>
+                <NavItem>speakers</NavItem>
+                <NavItem>earphones</NavItem>
+              </NavList>
+            </MenuContainer>
+          </Menu>
+        </Backdrop>
+      )}
     </HeaderComponent>
   );
 }
@@ -87,11 +125,14 @@ const LeftSide = styled.div`
   }
 `;
 
-const BurgerIcon = styled.img`
-  @media screen and (min-width: 1111px) {
+const OpenMenu = styled.img`
+  cursor: pointer;
+  @media screen and (min-width: 1110px) {
     display: none;
   }
 `;
+
+const CloseMenu = styled(OpenMenu)``;
 
 const Logo = styled.img`
   cursor: pointer;
@@ -106,19 +147,31 @@ const HeaderNav = styled.nav`
 
 const NavList = styled.ul`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  flex-direction: column;
   column-gap: 34px;
+  row-gap: 32px;
+  @media screen and (min-width: 1110px) {
+    flex-direction: row;
+    align-items: center;
+    row-gap: 0px;
+  }
 `;
 
 const NavItem = styled.li`
+  font-size: 24px;
+  line-height: 25px;
   font-style: normal;
   font-weight: 700;
-  font-size: 13px;
-  line-height: 25px;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: var(--white);
   transition-duration: 0.2s;
+  color: var(--white);
+
+  @media screen and (min-width: 1110px) {
+    font-size: 13px;
+    line-height: 25px;
+  }
 
   &:hover {
     cursor: pointer;
@@ -132,4 +185,28 @@ const RightSide = styled.div``;
 
 const CartIcon = styled.img`
   cursor: pointer;
+`;
+
+// Backdrop
+
+const Backdrop = styled.div`
+  width: 100%;
+  height: calc(100vh - 89px);
+  position: absolute;
+  z-index: 9999;
+  top: 89px;
+  left: 0px;
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: height 2s ease-in;
+  @media screen and (min-width: 1110px) {
+    display: none;
+  }
+`;
+
+const Menu = styled.div`
+  background: var(--primary-black);
+`;
+
+const MenuContainer = styled.div`
+  padding: 48px 0px 48px 24px;
 `;

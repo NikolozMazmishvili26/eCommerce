@@ -11,7 +11,7 @@ function Categories() {
     <CategoriesComponent>
       <Category image={headphones} title="headphones" />
       <Category image={speakers} title="speakers" />
-      <Category image={earphones} title="speakers" />
+      <Category image={earphones} title="earphones" />
     </CategoriesComponent>
   );
 }
