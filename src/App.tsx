@@ -1,7 +1,13 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { createGlobalStyle } from "styled-components";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import styled, { createGlobalStyle } from "styled-components";
+import { Location } from "@remix-run/router";
 
 const GlobalStyles = createGlobalStyle`
+
+  *{
+    box-sizing: border-box;
+  }
+
   /* reset css */
   html, body, div, span, applet, object, iframe,
   h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -50,7 +56,7 @@ const GlobalStyles = createGlobalStyle`
   /* global styles */
   :root{
     --primary-orange : #D87D4A;
-    --secondary-orange : #FBAF85,
+    --secondary-orange : #FBAF85;
     --primary-black  :#000000;
     --secondary-black :#101010;
     --primary-grey : #F1F1F1;
@@ -59,22 +65,35 @@ const GlobalStyles = createGlobalStyle`
   }
 `;
 
+export const GlobalContainer = styled.div<{ location: Location }>`
+  position: relative;
+  max-width: 1440px;
+  width: 100%;
+  margin: auto;
+  background-color: ${(props) =>
+    props.location.pathname !== "/" && "var(--primary-black)"};
+`;
+
+// impot layouts
+import { Header, Footer } from "./layouts";
+
 // import pages
 import { Category, Checkout, Detail, Home } from "./pages";
 
 function App() {
+  const location = useLocation();
   return (
-    <>
+    <GlobalContainer location={location}>
       <GlobalStyles />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />}></Route>
-          <Route path="/category/:categoryId" element={<Category />}></Route>
-          <Route path="/detail/:detailId" element={<Detail />}></Route>
-          <Route path="/checkout" element={<Checkout />}></Route>
-        </Routes>
-      </BrowserRouter>
-    </>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Home />}></Route>
+        <Route path="/category/:categoryId" element={<Category />}></Route>
+        <Route path="/detail/:detailId" element={<Detail />}></Route>
+        <Route path="/checkout" element={<Checkout />}></Route>
+      </Routes>
+      <Footer />
+    </GlobalContainer>
   );
 }
 
