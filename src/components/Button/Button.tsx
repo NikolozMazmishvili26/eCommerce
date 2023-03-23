@@ -6,6 +6,7 @@ interface ButtonProps {
   border: string;
   hoverColor: string;
   color: string;
+  handleAddToCart?: () => void;
 }
 
 function Button({
@@ -14,13 +15,16 @@ function Button({
   border,
   hoverColor,
   color,
+  handleAddToCart,
 }: ButtonProps) {
+  //
   return (
     <GlobalButton
       backgroundColor={backgroundColor}
       border={border}
       hoverColor={hoverColor}
       color={color}
+      onClick={handleAddToCart}
     >
       {title}
     </GlobalButton>

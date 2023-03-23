@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { useState } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
 import styled, { createGlobalStyle } from "styled-components";
 import { Location } from "@remix-run/router";
 
@@ -84,19 +85,32 @@ import { Header, Footer } from "./layouts";
 // import pages
 import { UniqueCategory, Checkout, Detail, Home } from "./pages";
 
+export type cartItemsProps = {
+  image: string;
+  name: string;
+  price: number;
+  counterValue: number;
+};
+
 function App() {
+  //
+  const [cartItems, setCartItems] = useState<cartItemsProps[]>([]);
+
   const location = useLocation();
   return (
     <GlobalContainer location={location}>
       <GlobalStyles />
-      <Header />
+      <Header cartItems={cartItems} setCartItems={setCartItems} />
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route
           path="/category/:categoryId"
           element={<UniqueCategory />}
         ></Route>
-        <Route path="/productDetail/:detailId" element={<Detail />}></Route>
+        <Route
+          path="/productDetail/:detailName"
+          element={<Detail setCartItems={setCartItems} cartItems={cartItems} />}
+        ></Route>
         <Route path="/checkout" element={<Checkout />}></Route>
       </Routes>
       <Footer />

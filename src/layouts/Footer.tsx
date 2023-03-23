@@ -28,7 +28,7 @@ function Footer() {
             to helping you get the most out of personal audio. Come and visit
             our demo facility - we’re open 7 days a week.
           </Description>
-          <Copyright>Copyright 2021. All Rights Reserved</Copyright>
+          <Copyright>Copyright 2023. All Rights Reserved</Copyright>
         </DescriptionBox>
         {/*  */}
         <SocialMediaBox>

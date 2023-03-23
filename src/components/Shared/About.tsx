@@ -82,6 +82,7 @@ const DescriptionBox = styled.div`
   margin-top: 40px;
   @media screen and (min-width: 1110px) {
     max-width: 445px;
+    margin-top: 0px;
   }
 `;
 
@@ -102,6 +103,7 @@ const Title = styled.h2`
   }
   @media screen and (min-width: 1110px) {
     text-align: start;
+    margin-top: 0px;
   }
 `;
 

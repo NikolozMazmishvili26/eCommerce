@@ -3,12 +3,24 @@ import styled from "styled-components";
 import { useLocation, Link } from "react-router-dom";
 import { Location } from "@remix-run/router";
 
+// import component
+import { Cart } from "../components";
+
 // import assets
 import { Hamburger, logo, cart, close } from "../assets";
 
-function Header() {
+// import interface
+import { cartItemsProps } from "../App";
+
+interface HeaderProps {
+  cartItems: cartItemsProps[];
+  setCartItems: React.Dispatch<React.SetStateAction<cartItemsProps[]>>;
+}
+
+function Header({ cartItems, setCartItems }: HeaderProps) {
   //
   const [showMenu, setShowMenu] = useState(false);
+  const [showCart, setShowCart] = useState(true);
 
   useEffect(() => {
     document.body.style.overflow = showMenu ? "hidden" : "unset";
@@ -43,9 +55,15 @@ function Header() {
                 <Link to="/">
                   <NavItem>home</NavItem>
                 </Link>
-                <NavItem>headphones</NavItem>
-                <NavItem>speakers</NavItem>
-                <NavItem>earphones</NavItem>
+                <Link to="/category/headphones">
+                  <NavItem>headphones</NavItem>
+                </Link>
+                <Link to="/category/speakers">
+                  <NavItem>speakers</NavItem>
+                </Link>
+                <Link to="/category/earphones">
+                  <NavItem>earphones</NavItem>
+                </Link>
               </NavList>
             </HeaderNav>
           </LeftSide>
@@ -53,16 +71,35 @@ function Header() {
             <CartIcon src={cart} alt="cart" />
           </RightSide>
         </Content>
+        {/* Cart Component */}
+        {showCart && <Cart cartItems={cartItems} setCartItems={setCartItems} />}
         {/*  */}
         {showMenu && (
           <Backdrop>
             <Menu>
               <MenuContainer>
                 <NavList>
-                  <NavItem>home</NavItem>
-                  <NavItem>headphones</NavItem>
-                  <NavItem>speakers</NavItem>
-                  <NavItem>earphones</NavItem>
+                  <Link to="/" onClick={() => setShowMenu(false)}>
+                    <NavItem>home</NavItem>
+                  </Link>
+                  <Link
+                    to="/category/headphones"
+                    onClick={() => setShowMenu(false)}
+                  >
+                    <NavItem>headphones</NavItem>
+                  </Link>
+                  <Link
+                    to="/category/speakers"
+                    onClick={() => setShowMenu(false)}
+                  >
+                    <NavItem>speakers</NavItem>
+                  </Link>
+                  <Link
+                    to="/category/earphones"
+                    onClick={() => setShowMenu(false)}
+                  >
+                    <NavItem>earphones</NavItem>
+                  </Link>
                 </NavList>
               </MenuContainer>
             </Menu>

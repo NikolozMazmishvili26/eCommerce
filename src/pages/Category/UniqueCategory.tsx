@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import data from "../../../data.json";
@@ -63,9 +62,8 @@ function Category() {
   //
   const params = useParams();
   //
-  const [products, setProducts] = useState(data);
 
-  const categoryProducts = products.filter(
+  const categoryProducts = data.filter(
     (product) => product.category === params.categoryId
   );
 

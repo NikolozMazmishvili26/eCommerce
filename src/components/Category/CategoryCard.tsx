@@ -12,9 +12,9 @@ interface CategoryCardProps {
 
 function CategoryCard({ product }: CategoryCardProps) {
   //
-  const [tabletImageUrl, setTabletImageUrl] = useState("");
-  const [desktopImageUrl, setDesktopImageUrl] = useState("");
-  const [mobileImageUrl, setMobileImageUrl] = useState("");
+  const [tabletImageUrl, setTabletImageUrl] = useState<string>("");
+  const [desktopImageUrl, setDesktopImageUrl] = useState<string>("");
+  const [mobileImageUrl, setMobileImageUrl] = useState<string>("");
 
   useEffect(() => {
     import(`../../${product.image.mobile}`) /* @vite-ignore */
@@ -39,14 +39,14 @@ function CategoryCard({ product }: CategoryCardProps) {
 
   return (
     <Card>
-      <ImageContainer slug={product.slug}>
+      <ImageContainer id={String(product.id)}>
         <ImageBox images={images}></ImageBox>
       </ImageContainer>
       <DescriptionBox>
         <Title>new product</Title>
         <ProductName>{product.name}</ProductName>
         <Description>{product.description}</Description>
-        <Link to={`/productDetail/${product.id}`}>
+        <Link to={`/productDetail/${product.slug}`}>
           <Button
             title="see product"
             backgroundColor="var(--primary-orange)"
@@ -73,7 +73,7 @@ const Card = styled.div`
   }
 `;
 
-const ImageContainer = styled.div<{ slug: string }>`
+const ImageContainer = styled.div<{ id?: string }>`
   width: 100%;
   position: relative;
   background-color: var(--primary-grey);
@@ -83,7 +83,7 @@ const ImageContainer = styled.div<{ slug: string }>`
   @media screen and (min-width: 1110px) {
     width: 540px;
     height: 560px;
-    order: ${(props) => props.slug === "xx99-mark-one-headphones" && 2};
+    order: ${(props) => (props.id === "3" || props.id === "6" ? 2 : 0)};
   }
 `;
 
