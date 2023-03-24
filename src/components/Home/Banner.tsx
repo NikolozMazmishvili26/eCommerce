@@ -8,24 +8,28 @@ import {
   imageHeaderTablet,
   imageHeaderDesktop,
 } from "../../assets";
+import { Link } from "react-router-dom";
 
 function Banner() {
   return (
     <Container>
       <Content>
         <BannerDescribe>new product</BannerDescribe>
+
         <Title>XX99 Mark II HeadphoneS</Title>
         <Description>
           Experience natural, lifelike audio and exceptional build quality made
           for the passionate music enthusiast.
         </Description>
-        <Button
-          title="see product"
-          backgroundColor="var(--primary-orange)"
-          border="none"
-          hoverColor="var(--secondary-orange)"
-          color="var(--white)"
-        />
+        <Link to="/productDetail/xx99-mark-two-headphones">
+          <Button
+            title="see product"
+            backgroundColor="var(--primary-orange)"
+            border="none"
+            hoverColor="var(--secondary-orange)"
+            color="var(--white)"
+          />
+        </Link>
       </Content>
     </Container>
   );

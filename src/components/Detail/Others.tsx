@@ -64,7 +64,8 @@ const Wrapper = styled.div`
     margin-top: 56px;
   }
   @media screen and (min-width: 1110px) {
-    column-gap: 30px;
+    justify-content: space-between;
+    /* column-gap: 30px; */
     margin-top: 64px;
   }
 `;

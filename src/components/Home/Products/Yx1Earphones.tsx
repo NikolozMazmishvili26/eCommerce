@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 // import assets
@@ -24,13 +25,15 @@ function Yx1Earphones() {
       <BackgroundImage images={images} />
       <Descripbtion>
         <Title>yx1 earphones</Title>
-        <Button
-          title="see product"
-          backgroundColor="transparent"
-          border="1px solid var(--primary-black)"
-          color="var(--primary-color)"
-          hoverColor="var(--primary-black)"
-        />
+        <Link to="/productDetail/yx1-earphones">
+          <Button
+            title="see product"
+            backgroundColor="transparent"
+            border="1px solid var(--primary-black)"
+            color="var(--primary-color)"
+            hoverColor="var(--primary-black)"
+          />
+        </Link>
       </Descripbtion>
     </Container>
   );

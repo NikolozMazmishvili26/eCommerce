@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 // import assets
@@ -23,13 +24,15 @@ function Zx7Speaker() {
   return (
     <Container images={images}>
       <Title>ZX7 SPEAKER</Title>
-      <Button
-        title="see product"
-        backgroundColor="transparent"
-        border="1px solid var(--primary-black)"
-        color="var(--primary-color)"
-        hoverColor="var(--primary-black)"
-      />
+      <Link to="/productDetail/zx7-speaker">
+        <Button
+          title="see product"
+          backgroundColor="transparent"
+          border="1px solid var(--primary-black)"
+          color="var(--primary-color)"
+          hoverColor="var(--primary-black)"
+        />
+      </Link>
     </Container>
   );
 }

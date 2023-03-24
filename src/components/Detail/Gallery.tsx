@@ -93,6 +93,9 @@ const LeftSide = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 20px;
+  @media screen and (min-width: 1110px) {
+    row-gap: 32px;
+  }
 `;
 
 const RightSide = styled.div``;

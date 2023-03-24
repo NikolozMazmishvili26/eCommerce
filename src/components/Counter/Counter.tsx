@@ -12,11 +12,7 @@ import { increment, decrement } from "../../assets";
 import { cartItemsProps } from "../../App";
 
 interface CounterProps {
-  categoryImage: {
-    mobile: string;
-    tablet: string;
-    desktop: string;
-  };
+  categoryImage: string;
   name: string;
   price: number;
   setCartItems: React.Dispatch<React.SetStateAction<cartItemsProps[]>>;
@@ -42,7 +38,7 @@ function Counter({
   const addToCart = () => {
     //
     const existingItemIndex = cartItems.findIndex(
-      (item) => item.name === name && item.image === categoryImage.mobile
+      (item) => item.name === name && item.image === categoryImage
     );
 
     if (existingItemIndex !== -1) {
@@ -53,7 +49,8 @@ function Counter({
       setCartItems([
         ...cartItems,
         {
-          image: categoryImage.mobile,
+          id: new Date().getTime().toString(),
+          image: categoryImage,
           name: name,
           price: price,
           counterValue: countValue,
@@ -61,8 +58,6 @@ function Counter({
       ]);
     }
   };
-
-  // console.log("cartItems", cartItems);
 
   return (
     <CartCounterContainer>

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 // import assets
@@ -20,13 +21,15 @@ function Zx9Speaker() {
           Upgrade to premium speakers that are phenomenally built to deliver
           truly remarkable sound.
         </Description>
-        <Button
-          title="see product"
-          backgroundColor="var(--primary-black)"
-          border="none"
-          color="var(--white)"
-          hoverColor="#4C4C4C"
-        />
+        <Link to="/productDetail/zx9-speaker">
+          <Button
+            title="see product"
+            backgroundColor="var(--primary-black)"
+            border="none"
+            color="var(--white)"
+            hoverColor="#4C4C4C"
+          />
+        </Link>
       </RightSide>
       {/* circles */}
       <MainCircle>

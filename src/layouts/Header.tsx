@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { useLocation, Link } from "react-router-dom";
 import { Location } from "@remix-run/router";
@@ -15,19 +15,51 @@ import { cartItemsProps } from "../App";
 interface HeaderProps {
   cartItems: cartItemsProps[];
   setCartItems: React.Dispatch<React.SetStateAction<cartItemsProps[]>>;
+  setShowCart: React.Dispatch<React.SetStateAction<boolean>>;
+  showCart: boolean;
 }
 
-function Header({ cartItems, setCartItems }: HeaderProps) {
+function Header({
+  cartItems,
+  setCartItems,
+  setShowCart,
+  showCart,
+}: HeaderProps) {
   //
   const [showMenu, setShowMenu] = useState(false);
-  const [showCart, setShowCart] = useState(true);
 
   useEffect(() => {
-    document.body.style.overflow = showMenu ? "hidden" : "unset";
-  }, [showMenu]);
+    document.body.style.overflow = showMenu || showCart ? "hidden" : "unset";
+  }, [showMenu, showCart]);
 
   //
   const location = useLocation();
+
+  const handleCart = () => {
+    setShowCart(true);
+    if (showMenu) {
+      setShowMenu(false);
+    }
+  };
+
+  const handleShowMenu = () => {
+    setShowMenu(true);
+    if (showCart) {
+      setShowCart(false);
+    }
+  };
+
+  //
+
+  const backDropref = useRef<HTMLDivElement | null>(null);
+
+  const handleBackdrop: React.MouseEventHandler<HTMLDivElement> | undefined = (
+    event
+  ) => {
+    if (event.target === backDropref.current) {
+      setShowMenu(false);
+    }
+  };
 
   return (
     <Container location={location}>
@@ -44,11 +76,13 @@ function Header({ cartItems, setCartItems }: HeaderProps) {
               <OpenMenu
                 src={Hamburger}
                 alt="burger-menu"
-                onClick={() => setShowMenu(true)}
+                onClick={handleShowMenu}
               />
             )}
 
-            <Logo src={logo} alt="logo" />
+            <Link to="/">
+              <Logo src={logo} alt="logo" />
+            </Link>
             {/* navigation */}
             <HeaderNav>
               <NavList>
@@ -68,14 +102,20 @@ function Header({ cartItems, setCartItems }: HeaderProps) {
             </HeaderNav>
           </LeftSide>
           <RightSide>
-            <CartIcon src={cart} alt="cart" />
+            <CartIcon src={cart} alt="cart" onClick={handleCart} />
           </RightSide>
         </Content>
         {/* Cart Component */}
-        {showCart && <Cart cartItems={cartItems} setCartItems={setCartItems} />}
+        {showCart && (
+          <Cart
+            cartItems={cartItems}
+            setCartItems={setCartItems}
+            setShowCart={setShowCart}
+          />
+        )}
         {/*  */}
         {showMenu && (
-          <Backdrop>
+          <Backdrop ref={backDropref} onClick={handleBackdrop}>
             <Menu>
               <MenuContainer>
                 <NavList>
@@ -118,6 +158,9 @@ const Container = styled.div<{ location: Location }>`
 `;
 
 const HeaderComponent = styled.div<{ location: Location }>`
+  max-width: 1110px;
+  width: 100%;
+  margin: auto;
   position: relative;
   background-color: ${(props) =>
     props.location.pathname !== "/" && "var(--primary-black)"};
@@ -137,9 +180,6 @@ const HeaderComponent = styled.div<{ location: Location }>`
   }
 
   @media screen and (min-width: 1110px) {
-    max-width: 1110px;
-    width: 100%;
-    margin: auto;
     padding: 0px;
   }
 `;

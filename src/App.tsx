@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import styled, { createGlobalStyle } from "styled-components";
 import { Location } from "@remix-run/router";
@@ -57,6 +57,7 @@ const GlobalStyles = createGlobalStyle`
 
   a{
     text-decoration: none;
+    color: var(--primary-black);
   }
 
 
@@ -86,6 +87,7 @@ import { Header, Footer } from "./layouts";
 import { UniqueCategory, Checkout, Detail, Home } from "./pages";
 
 export type cartItemsProps = {
+  id: string;
   image: string;
   name: string;
   price: number;
@@ -94,13 +96,26 @@ export type cartItemsProps = {
 
 function App() {
   //
-  const [cartItems, setCartItems] = useState<cartItemsProps[]>([]);
+  const [cartItems, setCartItems] = useState<cartItemsProps[]>(
+    JSON.parse(localStorage.getItem("cartItems") || "[]")
+  );
+
+  useEffect(() => {
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  }, [cartItems]);
+
+  const [showCart, setShowCart] = useState(false);
 
   const location = useLocation();
   return (
     <GlobalContainer location={location}>
       <GlobalStyles />
-      <Header cartItems={cartItems} setCartItems={setCartItems} />
+      <Header
+        cartItems={cartItems}
+        setCartItems={setCartItems}
+        setShowCart={setShowCart}
+        showCart={showCart}
+      />
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route

@@ -46,7 +46,7 @@ function Other({ other }: OtherProps) {
   };
 
   return (
-    <Link to={`/productDetail/${slug}`}>
+    <CardLink to={`/productDetail/${slug}`}>
       <Card>
         <BackgroundImage images={images} />
         <Title>{name}</Title>
@@ -58,11 +58,15 @@ function Other({ other }: OtherProps) {
           hoverColor="var(--secondary-orange)"
         />
       </Card>
-    </Link>
+    </CardLink>
   );
 }
 
 export default Other;
+
+const CardLink = styled(Link)`
+  width: 100%;
+`;
 
 const Card = styled.div`
   width: 100%;

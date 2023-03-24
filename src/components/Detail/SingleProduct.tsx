@@ -72,7 +72,7 @@ function SingleProduct({
         <Counter
           cartItems={cartItems}
           setCartItems={setCartItems}
-          categoryImage={categoryImage}
+          categoryImage={mobileImageUrl}
           name={name}
           price={price}
         />
