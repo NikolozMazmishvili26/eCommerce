@@ -68,7 +68,7 @@ const GlobalStyles = createGlobalStyle`
     --primary-black  :#000000;
     --secondary-black :#101010;
     --primary-grey : #F1F1F1;
-    -grayish-white : #FAFAFA;
+    --grayish-white : #FAFAFA;
     --white : #FFFFFF;
   }
 `;
@@ -85,6 +85,10 @@ import { Header, Footer } from "./layouts";
 
 // import pages
 import { UniqueCategory, Checkout, Detail, Home } from "./pages";
+
+// import component
+
+import { Cart } from "./components";
 
 export type cartItemsProps = {
   id: string;
@@ -126,9 +130,20 @@ function App() {
           path="/productDetail/:detailName"
           element={<Detail setCartItems={setCartItems} cartItems={cartItems} />}
         ></Route>
-        <Route path="/checkout" element={<Checkout />}></Route>
+        <Route
+          path="/checkout"
+          element={<Checkout cartItems={cartItems} />}
+        ></Route>
       </Routes>
-      <Footer />
+      {/* Cart Component */}
+      {showCart && (
+        <Cart
+          cartItems={cartItems}
+          setCartItems={setCartItems}
+          setShowCart={setShowCart}
+        />
+      )}
+      <Footer showCart={showCart} />
     </GlobalContainer>
   );
 }

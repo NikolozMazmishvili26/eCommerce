@@ -8,6 +8,7 @@ import { cartItemsProps } from "../../App";
 // import component
 
 import { SingleItem } from "../../components";
+import { Link } from "react-router-dom";
 
 interface CartProps {
   cartItems: cartItemsProps[];
@@ -79,7 +80,9 @@ function Cart({ cartItems, setCartItems, setShowCart }: CartProps) {
           <TotalCounter>$ {sumOfPrices}</TotalCounter>
         </TotalPriceCounter>
         {/* checkout button */}
-        <CheckoutButton>checkout</CheckoutButton>
+        <Link to="/checkout" onClick={() => setShowCart(false)}>
+          <CheckoutButton>checkout</CheckoutButton>
+        </Link>
       </CartContainer>
     </BackDrop>
   );
@@ -90,20 +93,25 @@ export default Cart;
 const BackDrop = styled(motion.div)`
   max-width: 1440px;
   width: 100%;
-  height: calc(100vh - 90px);
-  position: fixed;
+  height: 100%;
+  position: absolute;
   z-index: 9999;
-  top: 90px;
+  top: 92px;
   left: 50%;
   transform: translate(-50%);
   background-color: rgba(0, 0, 0, 0.4);
   padding: 24px 24px 0px 24px;
+  @media screen and (min-width: 1110px) {
+    top: 96px;
+  }
 `;
 
 const CartContainer = styled(motion.div)`
   background-color: var(--white);
   border-radius: 8px;
   padding: 32px 28px;
+  max-width: 445px;
+  margin: auto;
   @media screen and (min-width: 768px) {
     width: 377px;
     position: absolute;

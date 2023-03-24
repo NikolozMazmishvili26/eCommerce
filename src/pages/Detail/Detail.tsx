@@ -102,4 +102,9 @@ const GoBackButton = styled.button`
   border: none;
   background-color: transparent;
   cursor: pointer;
+  transition-duration: 0.2s;
+
+  &:hover {
+    color: var(--primary-orange);
+  }
 `;

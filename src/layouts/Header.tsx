@@ -29,7 +29,7 @@ function Header({
   const [showMenu, setShowMenu] = useState(false);
 
   useEffect(() => {
-    document.body.style.overflow = showMenu || showCart ? "hidden" : "unset";
+    document.body.style.overflow = showMenu ? "hidden" : "unset";
   }, [showMenu, showCart]);
 
   //
@@ -105,14 +105,7 @@ function Header({
             <CartIcon src={cart} alt="cart" onClick={handleCart} />
           </RightSide>
         </Content>
-        {/* Cart Component */}
-        {showCart && (
-          <Cart
-            cartItems={cartItems}
-            setCartItems={setCartItems}
-            setShowCart={setShowCart}
-          />
-        )}
+        {/* cart component is down after backdrop */}
         {/*  */}
         {showMenu && (
           <Backdrop ref={backDropref} onClick={handleBackdrop}>
@@ -153,15 +146,16 @@ function Header({
 export default Header;
 
 const Container = styled.div<{ location: Location }>`
+  position: relative;
   background-color: ${(props) =>
     props.location.pathname !== "/" && "var(--primary-black)"};
 `;
 
 const HeaderComponent = styled.div<{ location: Location }>`
+  position: relative;
   max-width: 1110px;
   width: 100%;
   margin: auto;
-  position: relative;
   background-color: ${(props) =>
     props.location.pathname !== "/" && "var(--primary-black)"};
 

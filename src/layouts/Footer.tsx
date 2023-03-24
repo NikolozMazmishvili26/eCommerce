@@ -4,9 +4,9 @@ import styled from "styled-components";
 
 import { logo, facebook, twitter, instagram } from "../assets";
 
-function Footer() {
+function Footer({ showCart }: { showCart: boolean }) {
   return (
-    <FooterContainer>
+    <FooterContainer showCart={showCart}>
       <Line />
       <NavigationContainer>
         <Logo src={logo} alt="logo" />
@@ -43,15 +43,18 @@ function Footer() {
 
 export default Footer;
 
-const FooterContainer = styled.footer`
+const FooterContainer = styled.footer<{ showCart: boolean }>`
   position: relative;
   background-color: var(--secondary-black);
   padding: 52px 24px 38px 24px;
+  top: ${(props) => (props.showCart ? "92px" : "0")};
   @media screen and (min-width: 768px) {
     padding: 60px 40px 46px 39px;
   }
   @media screen and (min-width: 1110px) {
     padding: 75px 167px 48px 167px;
+    bottom: 0px;
+    top: ${(props) => (props.showCart ? "96px" : "0")};
   }
 `;
 
