@@ -14,8 +14,11 @@ interface PaymentMethodsProps {
 }
 
 // import component
-
 import { Input } from "../../../components";
+
+// import asset
+
+import { delivery } from "../../../assets";
 
 function PaymentMethods({
   errors,
@@ -24,6 +27,24 @@ function PaymentMethods({
 }: PaymentMethodsProps) {
   //
   const [showEmoney, setShowEmoney] = useState(false);
+  const [showDelivery, setShowDelivery] = useState(false);
+
+  // show payment
+
+  const handleShowEmoney = () => {
+    setShowEmoney(true);
+    if (showDelivery) {
+      setShowDelivery(false);
+    }
+  };
+
+  // show delivery
+  const handleShowDelivery = () => {
+    setShowDelivery(true);
+    if (showEmoney) {
+      setShowEmoney(false);
+    }
+  };
 
   return (
     <Container>
@@ -34,7 +55,7 @@ function PaymentMethods({
           <RadioInput
             type="radio"
             {...register("paymentMethod", { required: true })}
-            onClick={() => setShowEmoney(true)}
+            onClick={handleShowEmoney}
           />
           <Title>e-Money</Title>
         </RadioBox>
@@ -43,7 +64,7 @@ function PaymentMethods({
           <RadioInput
             type="radio"
             {...register("paymentMethod", { required: true })}
-            onClick={() => setShowEmoney(false)}
+            onClick={handleShowDelivery}
           />
           <Title>Cash on Delivery</Title>
         </RadioBox>
@@ -72,6 +93,16 @@ function PaymentMethods({
               registerValue="eMoneyPin"
             />
           </>
+        )}
+        {showDelivery && (
+          <DeliveryBox>
+            <DeliveryImage src={delivery} alt="delivery" />
+            <DeliveryDescription>
+              The ‘Cash on Delivery’ option enables you to pay in cash when our
+              delivery courier arrives at your residence. Just make sure your
+              address is correct so that your order will not be cancelled.
+            </DeliveryDescription>
+          </DeliveryBox>
         )}
       </PaymentWrapper>
     </Container>
@@ -151,4 +182,36 @@ const PaymentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 16px;
+`;
+
+// delivery container
+
+const DeliveryBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 12px;
+  @media screen and (min-width: 768px) {
+    flex-direction: row;
+    row-gap: 0px;
+    align-items: center;
+    column-gap: 32px;
+    margin-top: 15px;
+  }
+`;
+
+const DeliveryImage = styled.img``;
+
+const DeliveryDescription = styled.p`
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 25px;
+  color: var(--primary-black);
+  mix-blend-mode: normal;
+  opacity: 0.5;
+  text-align: center;
+  @media screen and (min-width: 768px) {
+    text-align: start;
+  }
 `;

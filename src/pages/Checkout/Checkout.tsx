@@ -7,7 +7,7 @@ import { cartItemsProps } from "../../App";
 
 // import components
 
-import { CheckoutForm, Summary } from "../../components";
+import { CheckoutForm, Summary, SuccessOrder } from "../../components";
 
 function Checkout({ cartItems }: { cartItems: cartItemsProps[] }) {
   const {
@@ -18,8 +18,10 @@ function Checkout({ cartItems }: { cartItems: cartItemsProps[] }) {
 
   //
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const onSubmit = (data: any) => {
+    setSuccess(true);
     setIsSubmitting(true);
     setTimeout(() => {
       console.log(data); // Log the form data when the form is submitted
@@ -42,6 +44,8 @@ function Checkout({ cartItems }: { cartItems: cartItemsProps[] }) {
         {/* summary component */}
         <Summary cartItems={cartItems} />
       </Form>
+      {/*  */}
+      {success && <SuccessOrder cartItems={cartItems} />}
     </Container>
   );
 }
@@ -83,21 +87,6 @@ const GoBackButton = styled.button`
 
   &:hover {
     color: var(--primary-orange);
-  }
-`;
-
-const Wrapper = styled.div`
-  max-width: 1110px;
-  width: 100%;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  row-gap: 32px;
-  @media screen and (min-width: 1110px) {
-    flex-direction: row;
-    align-items: flex-start;
-    margin-top: 38px;
-    column-gap: 30px;
   }
 `;
 

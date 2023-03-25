@@ -273,10 +273,10 @@ const CartIcon = styled.img`
 
 const Backdrop = styled.div`
   width: 100%;
-  height: calc(100vh - 90px);
   position: absolute;
+  height: 100vh;
   z-index: 9999;
-  top: 90px;
+  top: 92px;
   left: 0px;
   background-color: rgba(0, 0, 0, 0.5);
   transition: height 2s ease-in;

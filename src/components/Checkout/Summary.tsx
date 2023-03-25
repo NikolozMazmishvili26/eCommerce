@@ -41,7 +41,7 @@ function Summary({ cartItems }: { cartItems: cartItemsProps[] }) {
         </PriceStatistic>
       </PriceContainer>
       {/* submit */}
-      <SubmitButton>continue & pay</SubmitButton>
+      <SubmitButton type="submit">continue & pay</SubmitButton>
     </Container>
   );
 }
