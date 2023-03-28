@@ -110,11 +110,13 @@ const Top = styled.div`
 `;
 
 const Middle = styled.div`
+  display: grid;
+  row-gap: 24px;
   @media screen and (min-width: 768px) {
     width: 634px;
-    display: grid;
     grid-template-columns: 1fr 1fr;
     column-gap: 16px;
+    row-gap: 0px;
   }
 `;
 

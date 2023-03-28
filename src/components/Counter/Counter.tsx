@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 // import component
 
-import { Button } from "..";
+import { Button, AddToCartMessage } from "../../components";
 
 // import assets
 import { increment, decrement } from "../../assets";
@@ -28,6 +28,9 @@ function Counter({
 }: CounterProps) {
   //
   const [countValue, setCountValue] = useState(1);
+  const [showSuccessMessage, setShowSuccessMessage] = useState<
+    boolean | string
+  >(false);
 
   const handleDecrement = () => {
     if (countValue !== 1) {
@@ -42,10 +45,12 @@ function Counter({
     );
 
     if (existingItemIndex !== -1) {
+      setShowSuccessMessage("updated");
       const updatedCartItems = [...cartItems];
       updatedCartItems[existingItemIndex].counterValue = countValue;
       setCartItems(updatedCartItems);
     } else {
+      setShowSuccessMessage(true);
       setCartItems([
         ...cartItems,
         {
@@ -82,6 +87,19 @@ function Counter({
         hoverColor="var(--secondary-orange)"
         handleAddToCart={addToCart}
       />
+      {/* Add To Cart Success Message Component */}
+      {showSuccessMessage && (
+        <AddToCartMessage
+          message="Product add to cart"
+          setShowSuccessMessage={setShowSuccessMessage}
+        />
+      )}
+      {showSuccessMessage === "updated" && (
+        <AddToCartMessage
+          message="Product updated in cart"
+          setShowSuccessMessage={setShowSuccessMessage}
+        />
+      )}
     </CartCounterContainer>
   );
 }

@@ -1,22 +1,29 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { motion } from "framer-motion";
+
+// import interface
 import { cartItemsProps } from "../../App";
-
 // import assets
-
 import { orderConfirmation } from "../../assets";
-
 // import component
-
 import { Order } from "../../components";
+// import variants
+import { backdropVariants, successBoxVariants } from "./Variants";
 
-function SuccessOrder({ cartItems }: { cartItems: cartItemsProps[] }) {
+function SuccessOrder({
+  cartItems,
+  setCartItems,
+}: {
+  cartItems: cartItemsProps[];
+  setCartItems: React.Dispatch<React.SetStateAction<cartItemsProps[]>>;
+}) {
   //
   const firstItem = cartItems[0];
 
   return (
-    <Backdrop>
-      <SuccessBox>
+    <Backdrop variants={backdropVariants} initial="hidden" animate="visible">
+      <SuccessBox variants={successBoxVariants}>
         <SuccessImage src={orderConfirmation} alt="success" />
         <SuccessTitle>thank your for your order</SuccessTitle>
         <Description>
@@ -24,8 +31,9 @@ function SuccessOrder({ cartItems }: { cartItems: cartItemsProps[] }) {
         </Description>
         {/* order component */}
         <Order firstItem={firstItem} cartItems={cartItems} />
+        {/* order component */}
         <Link to="/">
-          <HomeButton>back to home</HomeButton>
+          <HomeButton onClick={() => setCartItems([])}>back to home</HomeButton>
         </Link>
       </SuccessBox>
     </Backdrop>
@@ -34,33 +42,36 @@ function SuccessOrder({ cartItems }: { cartItems: cartItemsProps[] }) {
 
 export default SuccessOrder;
 
-const Backdrop = styled.div`
-  position: absolute;
+const Backdrop = styled(motion.div)`
+  position: fixed;
   max-width: 1440px;
   width: 100%;
-  top: 92px;
+  top: 0px;
   left: 50%;
   transform: translate(-50%);
   height: 100%;
   padding-left: 24px;
   padding-right: 24px;
   background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  z-index: 99999;
 `;
 
-const SuccessBox = styled.div`
+const SuccessBox = styled(motion.div)`
   max-width: 540px;
   width: 100%;
-  margin: auto;
   background-color: var(--white);
   border-radius: 8px;
   padding: 32px;
-  margin-top: 132px;
+  margin: auto;
+  /* margin-top: 132px; */
   @media screen and (min-width: 768px) {
     padding: 48px;
-    margin-top: 59px;
+    /* margin-top: 59px; */
   }
   @media screen and (min-width: 1110px) {
-    margin-top: 150px;
+    /* margin-top: 150px; */
   }
 `;
 

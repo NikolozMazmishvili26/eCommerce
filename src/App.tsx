@@ -60,6 +60,15 @@ const GlobalStyles = createGlobalStyle`
     color: var(--primary-black);
   }
 
+  /* input[type="radio"]:checked {
+  background-color: #1e90ff !important;
+  color: #fff !important;
+  border-color: #1e90ff !important;
+}
+
+  input[type="radio"]:checked + label {
+  font-weight: bold;
+} */
 
   /* global styles */
   :root{
@@ -132,7 +141,9 @@ function App() {
         ></Route>
         <Route
           path="/checkout"
-          element={<Checkout cartItems={cartItems} />}
+          element={
+            <Checkout cartItems={cartItems} setCartItems={setCartItems} />
+          }
         ></Route>
       </Routes>
       {/* Cart Component */}

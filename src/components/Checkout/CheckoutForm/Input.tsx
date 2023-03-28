@@ -27,9 +27,21 @@ function Input({
   regex,
   registerValue,
 }: InputProps) {
+  //
+  const handleKeyPress:
+    | React.KeyboardEventHandler<HTMLInputElement>
+    | undefined = (event) => {
+      if (event.key === " " && (registerValue === "phoneNumber" || registerValue === "zipCode" || registerValue === "eMoney" || registerValue === "eMoneyPin")) {
+        event.preventDefault();
+      }
+      
+  };
+
   return (
     <div>
-      <Label htmlFor="firstName">{labelName}</Label>
+      <Label htmlFor="firstName" errors={errors} registerValue={registerValue}>
+        {labelName}
+      </Label>
       <CheckoutInput
         type={inputType}
         id={registerValue}
@@ -41,6 +53,7 @@ function Input({
         errors={errors}
         isSubmitting={isSubmitting}
         registerValue={registerValue}
+        onKeyPress={handleKeyPress}
       />
     </div>
   );
@@ -48,14 +61,18 @@ function Input({
 
 export default Input;
 
-const Label = styled.label`
+const Label = styled.label<{
+  errors: FieldErrors<FieldValues>;
+  registerValue: string;
+}>`
   font-family: "Manrope";
   font-style: normal;
   font-weight: 700;
   font-size: 12px;
   line-height: 16px;
   letter-spacing: -0.214286px;
-  color: var(--primary-black);
+  color: ${(props) =>
+    props.errors[props.registerValue] ? "red" : "var(--primary-black)"};
 `;
 
 const CheckoutInput = styled.input<{
@@ -71,7 +88,6 @@ const CheckoutInput = styled.input<{
   letter-spacing: -0.25px;
   color: var(--primary-black);
   mix-blend-mode: normal;
-  opacity: 0.4;
   width: 100%;
   border: 1px solid #cfcfcf;
   border-radius: 8px;
@@ -79,9 +95,14 @@ const CheckoutInput = styled.input<{
   height: 56px;
   margin-top: 9px;
   outline: none;
+
+  &::placeholder {
+    opacity: 0.4;
+  }
+
   border: ${(props) =>
     props.errors[props.registerValue]
-      ? "1px solid red"
+      ? "2px solid red"
       : props.isSubmitting
       ? "1px solid var(--primary-orange)"
       : ""};

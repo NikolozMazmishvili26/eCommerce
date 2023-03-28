@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import styled from "styled-components";
 // import interface
 import { cartItemsProps } from "../../App";
@@ -15,6 +16,7 @@ function Order({
     (prev, { price, counterValue }) => prev + price * counterValue,
     0
   );
+
   return (
     <OrderContainer>
       {/* order box */}

@@ -1,14 +1,14 @@
 import { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 // import interface
 import { cartItemsProps } from "../../App";
-
 // import component
-
-import { SingleItem } from "../../components";
-import { Link } from "react-router-dom";
+import { SingleItem, ErrorMessage } from "../../components";
+// import variants
+import { backdropVariants, cartContainerVariants } from "./Variants";
 
 interface CartProps {
   cartItems: cartItemsProps[];
@@ -18,7 +18,11 @@ interface CartProps {
 
 function Cart({ cartItems, setCartItems, setShowCart }: CartProps) {
   //
+  const navigate = useNavigate();
+
+  //
   const [sumOfPrices, setSumOfPrices] = useState(0);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const getSumOfPrices = async () => {
@@ -41,19 +45,26 @@ function Cart({ cartItems, setCartItems, setShowCart }: CartProps) {
     }
   };
 
+  //
+
+  const handleShowCart = () => {
+    if (cartItems.length === 0) {
+      setError(true);
+      return;
+    }
+    setShowCart(false);
+    navigate("/checkout");
+  };
+
   return (
     <BackDrop
       ref={backdropRef}
       onClick={handleBackdrop}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.3 }}
+      variants={backdropVariants}
+      initial="hidden"
+      animate="visible"
     >
-      <CartContainer
-        initial={{ y: "100vw" }}
-        animate={{ y: "0" }}
-        transition={{ type: "spring", duration: 0.3 }}
-      >
+      <CartContainer variants={cartContainerVariants}>
         {/* cart statistic */}
         <CartStatistic>
           <ItemLength>cart ({cartItems.length})</ItemLength>
@@ -62,27 +73,30 @@ function Cart({ cartItems, setCartItems, setShowCart }: CartProps) {
           </RemoveAllButton>
         </CartStatistic>
         {/*  */}
-        <CartList>
-          {cartItems.map((cart, index) => {
-            return (
-              <SingleItem
-                key={index}
-                cart={cart}
-                setCartItems={setCartItems}
-                cartItems={cartItems}
-              />
-            );
-          })}
-        </CartList>
+        {error ? (
+          <ErrorMessage />
+        ) : (
+          <CartList>
+            {cartItems.map((cart, index) => {
+              return (
+                <SingleItem
+                  key={index}
+                  cart={cart}
+                  setCartItems={setCartItems}
+                  cartItems={cartItems}
+                />
+              );
+            })}
+          </CartList>
+        )}
+
         {/* total price counter */}
         <TotalPriceCounter>
           <TotalTitle>total</TotalTitle>
           <TotalCounter>$ {sumOfPrices}</TotalCounter>
         </TotalPriceCounter>
         {/* checkout button */}
-        <Link to="/checkout" onClick={() => setShowCart(false)}>
-          <CheckoutButton>checkout</CheckoutButton>
-        </Link>
+        <CheckoutButton onClick={handleShowCart}>checkout</CheckoutButton>
       </CartContainer>
     </BackDrop>
   );
@@ -153,6 +167,11 @@ const RemoveAllButton = styled.button`
   background-color: transparent;
   border: none;
   cursor: pointer;
+  transition-duration: 0.2s;
+
+  &:hover {
+    opacity: 1;
+  }
 `;
 
 const CartList = styled.ul`

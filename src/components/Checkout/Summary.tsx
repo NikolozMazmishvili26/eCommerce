@@ -7,7 +7,13 @@ import { cartItemsProps } from "../../App";
 
 import { SummaryItem } from "../../components";
 
-function Summary({ cartItems }: { cartItems: cartItemsProps[] }) {
+function Summary({
+  cartItems,
+  checkoutIsEmpty,
+}: {
+  cartItems: cartItemsProps[];
+  checkoutIsEmpty: boolean;
+}) {
   //
   const totalPrice = cartItems.reduce(
     (prev, { price, counterValue }) => prev + price * counterValue,
@@ -42,6 +48,11 @@ function Summary({ cartItems }: { cartItems: cartItemsProps[] }) {
       </PriceContainer>
       {/* submit */}
       <SubmitButton type="submit">continue & pay</SubmitButton>
+      {checkoutIsEmpty && (
+        <EmptyError>
+          Cart is empty and the transaction could not be completed
+        </EmptyError>
+      )}
     </Container>
   );
 }
@@ -141,4 +152,11 @@ const SubmitButton = styled.button`
   &:hover {
     background-color: var(--secondary-orange);
   }
+`;
+
+const EmptyError = styled.p`
+  margin-top: 15px;
+  text-align: center;
+  color: red;
+  line-height: 22px;
 `;

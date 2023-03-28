@@ -26,6 +26,8 @@ function PaymentMethods({
   isSubmitting,
 }: PaymentMethodsProps) {
   //
+  const [checked1, setChecked1] = useState(false);
+  const [checked2, setChecked2] = useState(false);
   const [showEmoney, setShowEmoney] = useState(false);
   const [showDelivery, setShowDelivery] = useState(false);
 
@@ -36,6 +38,8 @@ function PaymentMethods({
     if (showDelivery) {
       setShowDelivery(false);
     }
+    setChecked1(true);
+    setChecked2(false);
   };
 
   // show delivery
@@ -44,6 +48,8 @@ function PaymentMethods({
     if (showEmoney) {
       setShowEmoney(false);
     }
+    setChecked1(false);
+    setChecked2(true);
   };
 
   return (
@@ -51,20 +57,22 @@ function PaymentMethods({
       <PaymentDetails>payment details</PaymentDetails>
       <PaymentMethod>Payment Method</PaymentMethod>
       <Wrapper>
-        <RadioBox error={errors}>
+        <RadioBox error={errors} checked={checked1}>
           <RadioInput
             type="radio"
             {...register("paymentMethod", { required: true })}
             onClick={handleShowEmoney}
+            checked={checked1}
           />
           <Title>e-Money</Title>
         </RadioBox>
 
-        <RadioBox error={errors}>
+        <RadioBox error={errors} checked={checked2}>
           <RadioInput
             type="radio"
             {...register("paymentMethod", { required: true })}
             onClick={handleShowDelivery}
+            checked={checked2}
           />
           <Title>Cash on Delivery</Title>
         </RadioBox>
@@ -147,10 +155,11 @@ const Wrapper = styled.div`
 
 const RadioBox = styled.div<{
   error: FieldErrors<FieldValues>;
+  checked: boolean;
 }>`
   width: 100%;
-  border: ${(props) =>
-    props.error.paymentMethod ? "1px solid red" : "1px solid #cfcfcf"};
+  /* border: ${(props) =>
+    props.error.paymentMethod ? "1px solid red" : "1px solid #cfcfcf"}; */
   height: 56px;
   border-radius: 8px;
   display: flex;
@@ -158,6 +167,12 @@ const RadioBox = styled.div<{
   padding-left: 16px;
   column-gap: 21px;
   cursor: pointer;
+  border: ${(props) =>
+    props.error.paymentMethod
+      ? "2px solid red"
+      : props.checked
+      ? "1px solid var(--primary-orange)"
+      : "1px solid #cfcfcf"};
 `;
 
 const RadioInput = styled.input`

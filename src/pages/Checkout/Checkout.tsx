@@ -6,10 +6,16 @@ import { useForm } from "react-hook-form";
 import { cartItemsProps } from "../../App";
 
 // import components
-
 import { CheckoutForm, Summary, SuccessOrder } from "../../components";
+import { Link } from "react-router-dom";
 
-function Checkout({ cartItems }: { cartItems: cartItemsProps[] }) {
+function Checkout({
+  cartItems,
+  setCartItems,
+}: {
+  cartItems: cartItemsProps[];
+  setCartItems: React.Dispatch<React.SetStateAction<cartItemsProps[]>>;
+}) {
   const {
     register,
     handleSubmit,
@@ -19,20 +25,33 @@ function Checkout({ cartItems }: { cartItems: cartItemsProps[] }) {
   //
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [checkoutIsEmpty, setCheckoutIsEmpty] = useState(false);
 
-  const onSubmit = (data: any) => {
+  const onSubmit = () => {
+    //
+    if (cartItems.length === 0) {
+      setCheckoutIsEmpty(true);
+      return;
+    }
     setSuccess(true);
     setIsSubmitting(true);
     setTimeout(() => {
-      console.log(data); // Log the form data when the form is submitted
       setIsSubmitting(false);
     }, 2000);
   };
 
+  useEffect(() => {
+    if (success) {
+      localStorage.removeItem("cartItems");
+    }
+  }, [success, cartItems]);
+
   return (
     <Container>
       <GoBackButtonContainer>
-        <GoBackButton>Go Back</GoBackButton>
+        <Link to="/">
+          <GoBackButton>Go Home</GoBackButton>
+        </Link>
       </GoBackButtonContainer>
       <Form onSubmit={handleSubmit(onSubmit)}>
         {/* checkout form component */}
@@ -42,10 +61,12 @@ function Checkout({ cartItems }: { cartItems: cartItemsProps[] }) {
           isSubmitting={isSubmitting}
         />
         {/* summary component */}
-        <Summary cartItems={cartItems} />
+        <Summary cartItems={cartItems} checkoutIsEmpty={checkoutIsEmpty} />
       </Form>
       {/*  */}
-      {success && <SuccessOrder cartItems={cartItems} />}
+      {success && (
+        <SuccessOrder cartItems={cartItems} setCartItems={setCartItems} />
+      )}
     </Container>
   );
 }

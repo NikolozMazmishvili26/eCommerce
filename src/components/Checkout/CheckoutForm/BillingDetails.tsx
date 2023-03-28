@@ -57,7 +57,7 @@ function BillingDetails({
             isSubmitting={isSubmitting}
             inputType="text"
             labelName="Phone Number"
-            placeholder="+995-593-20-99-77"
+            placeholder="+995 593 20 99 77"
             regex={/^(\+995|0)5\d{8}$/}
             registerValue="phoneNumber"
           />
@@ -94,9 +94,11 @@ const Wrapper = styled.div`
 `;
 
 const Top = styled.div`
+  display: grid;
+  row-gap: 24px;
   @media screen and (min-width: 768px) {
+    row-gap: 0px;
     width: 634px;
-    display: grid;
     grid-template-columns: 1fr 1fr;
     column-gap: 16px;
   }

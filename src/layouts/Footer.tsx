@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 // import assets
@@ -12,10 +13,18 @@ function Footer({ showCart }: { showCart: boolean }) {
         <Logo src={logo} alt="logo" />
         <FooterNav>
           <NavList>
-            <NavItem>home</NavItem>
-            <NavItem>headphones</NavItem>
-            <NavItem>speakers</NavItem>
-            <NavItem>earphones</NavItem>
+            <Link to="/">
+              <NavItem>home</NavItem>
+            </Link>
+            <Link to="/category/headphones">
+              <NavItem>headphones</NavItem>
+            </Link>
+            <Link to="/category/speakers">
+              <NavItem>speakers</NavItem>
+            </Link>
+            <Link to="/category/earphones">
+              <NavItem>earphones</NavItem>
+            </Link>
           </NavList>
         </FooterNav>
       </NavigationContainer>
@@ -48,6 +57,7 @@ const FooterContainer = styled.footer<{ showCart: boolean }>`
   background-color: var(--secondary-black);
   padding: 52px 24px 38px 24px;
   top: ${(props) => (props.showCart ? "92px" : "0")};
+  z-index: 2;
   @media screen and (min-width: 768px) {
     padding: 60px 40px 46px 39px;
   }
