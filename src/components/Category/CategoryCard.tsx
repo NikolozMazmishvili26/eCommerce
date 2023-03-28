@@ -17,18 +17,29 @@ function CategoryCard({ product }: CategoryCardProps) {
   const [mobileImageUrl, setMobileImageUrl] = useState<string>("");
 
   useEffect(() => {
-    import(`../../${product.image.mobile}`) /* @vite-ignore */
-      .then((module) => setMobileImageUrl(module.default))
-      .catch((err) => console.error(err));
+    const loadImages = async () => {
+      try {
+        const { default: mobileImage } = await import(
+          `../../${product.image.mobile}`
+        );
+        setMobileImageUrl(mobileImage);
 
-    import(`../../${product.image.tablet}`) /* @vite-ignore */
-      .then((module) => setTabletImageUrl(module.default))
-      .catch((err) => console.error(err));
+        const { default: tabletImage } = await import(
+          `../../${product.image.tablet}`
+        );
+        setTabletImageUrl(tabletImage);
 
-    import(`../../${product.image.desktop}`) /* @vite-ignore */
-      .then((module) => setDesktopImageUrl(module.default))
-      .catch((err) => console.error(err));
-  }, []);
+        const { default: desktopImage } = await import(
+          `../../${product.image.desktop}`
+        );
+        setDesktopImageUrl(desktopImage);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    loadImages();
+  }, [product]);
 
   //
   const images = {
