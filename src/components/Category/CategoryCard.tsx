@@ -12,40 +12,10 @@ interface CategoryCardProps {
 
 function CategoryCard({ product }: CategoryCardProps) {
   //
-  const [tabletImageUrl, setTabletImageUrl] = useState<string>("");
-  const [desktopImageUrl, setDesktopImageUrl] = useState<string>("");
-  const [mobileImageUrl, setMobileImageUrl] = useState<string>("");
-
-  useEffect(() => {
-    const loadImages = async () => {
-      try {
-        const { default: mobileImage } = await import(
-          `../../${product.image.mobile}`
-        );
-        setMobileImageUrl(mobileImage);
-
-        const { default: tabletImage } = await import(
-          `../../${product.image.tablet}`
-        );
-        setTabletImageUrl(tabletImage);
-
-        const { default: desktopImage } = await import(
-          `../../${product.image.desktop}`
-        );
-        setDesktopImageUrl(desktopImage);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    loadImages();
-  }, [product]);
-
-  //
   const images = {
-    mobile: mobileImageUrl,
-    tablet: tabletImageUrl,
-    desktop: desktopImageUrl,
+    mobile: product.categoryImage.mobile,
+    tablet: product.categoryImage.tablet,
+    desktop: product.categoryImage.desktop,
   };
 
   return (

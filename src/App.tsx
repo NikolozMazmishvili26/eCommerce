@@ -132,7 +132,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route
-          path="/category/:categoryId"
+          path="/category/:categoryName"
           element={<UniqueCategory />}
         ></Route>
         <Route

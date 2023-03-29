@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Button } from "../Button";
@@ -18,31 +17,11 @@ interface OtherProps {
 function Other({ other }: OtherProps) {
   //
   const { image, name, slug } = other;
-  //
-  //
-  const [tabletImageUrl, setTabletImageUrl] = useState<string>("");
-  const [desktopImageUrl, setDesktopImageUrl] = useState<string>("");
-  const [mobileImageUrl, setMobileImageUrl] = useState<string>("");
-
-  useEffect(() => {
-    import(`../../${image.mobile}`) /* @vite-ignore */
-      .then((module) => setMobileImageUrl(module.default))
-      .catch((err) => console.error(err));
-
-    import(`../../${image.tablet}`) /* @vite-ignore */
-      .then((module) => setTabletImageUrl(module.default))
-      .catch((err) => console.error(err));
-
-    import(`../../${image.desktop}`) /* @vite-ignore */
-      .then((module) => setDesktopImageUrl(module.default))
-      .catch((err) => console.error(err));
-  }, []);
-  //
 
   const images = {
-    mobile: mobileImageUrl,
-    tablet: tabletImageUrl,
-    desktop: desktopImageUrl,
+    mobile: image.mobile,
+    tablet: image.tablet,
+    desktop: image.desktop,
   };
 
   return (

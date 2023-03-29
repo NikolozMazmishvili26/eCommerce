@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import styled from "styled-components";
 
 interface GalleryProps {
@@ -22,50 +21,14 @@ interface GalleryProps {
 }
 
 function Gallery({ gallery }: GalleryProps) {
-  //
-  const { first, second, third } = gallery;
-
-  const [images, setImages] = useState({
-    first: { mobile: "", tablet: "", desktop: "" },
-    second: { mobile: "", tablet: "", desktop: "" },
-    third: { mobile: "", tablet: "", desktop: "" },
-  });
-
-  useEffect(() => {
-    const loadImages = async () => {
-      const promises = Object.entries(gallery).map(async ([key, value]) => {
-        const [mobile, tablet, desktop] = await Promise.all([
-          import(`../../${value.mobile}`),
-          import(`../../${value.tablet}`),
-          import(`../../${value.desktop}`),
-        ]);
-        return {
-          [key]: {
-            mobile: mobile.default,
-            tablet: tablet.default,
-            desktop: desktop.default,
-          },
-        };
-      });
-      const imageObjects = await Promise.all(promises);
-      const newImages: any = imageObjects.reduce(
-        (acc, curr) => ({ ...acc, ...curr }),
-        {}
-      );
-      setImages(newImages);
-    };
-
-    loadImages();
-  }, [gallery]);
-
   return (
     <GalleryContainer>
       <LeftSide>
-        <FirstImage firstImages={images.first} />
-        <SecondImage secondImages={images.second} />
+        <FirstImage firstImages={gallery.first} />
+        <SecondImage secondImages={gallery.second} />
       </LeftSide>
       <RightSide>
-        <ThirdImage thirdImages={images.third} />
+        <ThirdImage thirdImages={gallery.third} />
       </RightSide>
     </GalleryContainer>
   );

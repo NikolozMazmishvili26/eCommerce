@@ -64,13 +64,13 @@ function Category() {
   //
 
   const categoryProducts = data.filter(
-    (product) => product.category === params.categoryId
+    (product) => product.category === params.categoryName
   );
 
   return (
     <>
       <CategoryTitleBox>
-        <Title>{params.categoryId}</Title>
+        <Title>{params.categoryName}</Title>
       </CategoryTitleBox>
       <CategoryContainer>
         {categoryProducts.map((product) => {

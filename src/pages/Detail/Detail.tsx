@@ -35,8 +35,6 @@ function Detail({ cartItems, setCartItems }: DetailProps) {
     description,
     features,
     gallery,
-    id,
-    image,
     includes,
     name,
     others,

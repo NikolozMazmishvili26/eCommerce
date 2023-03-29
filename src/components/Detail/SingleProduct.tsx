@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import styled from "styled-components";
 
 // import interface
@@ -33,29 +32,10 @@ function SingleProduct({
   cartItems,
   setCartItems,
 }: SingleProductProps) {
-  //
-  const [tabletImageUrl, setTabletImageUrl] = useState<string>("");
-  const [desktopImageUrl, setDesktopImageUrl] = useState<string>("");
-  const [mobileImageUrl, setMobileImageUrl] = useState<string>("");
-
-  useEffect(() => {
-    import(`../../${categoryImage.mobile}`) /* @vite-ignore */
-      .then((module) => setMobileImageUrl(module.default))
-      .catch((err) => console.error(err));
-
-    import(`../../${categoryImage.tablet}`) /* @vite-ignore */
-      .then((module) => setTabletImageUrl(module.default))
-      .catch((err) => console.error(err));
-
-    import(`../../${categoryImage.desktop}`) /* @vite-ignore */
-      .then((module) => setDesktopImageUrl(module.default))
-      .catch((err) => console.error(err));
-  }, [slug]);
-
   const images = {
-    mobile: mobileImageUrl,
-    tablet: tabletImageUrl,
-    desktop: desktopImageUrl,
+    mobile: categoryImage.mobile,
+    tablet: categoryImage.tablet,
+    desktop: categoryImage.desktop,
   };
 
   return (
@@ -72,7 +52,7 @@ function SingleProduct({
         <Counter
           cartItems={cartItems}
           setCartItems={setCartItems}
-          categoryImage={mobileImageUrl}
+          categoryImage={categoryImage.mobile}
           name={name}
           price={price}
         />
